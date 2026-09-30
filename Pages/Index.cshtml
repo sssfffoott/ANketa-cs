@@ -1,0 +1,201 @@
+﻿@page
+@model IndexModel
+@* @{
+    Layout = null;
+    } *@
+
+@* @{
+    ViewData["Title"] = "Home page";
+    } *@
+
+<div class="form-container">
+
+    <h1>Анкета студента</h1>
+
+    <p class="description">
+        Введите свои данные
+    </p>
+
+    <form method="post">
+
+        <div class="form-group">
+            <label>Имя-фамилия:</label>
+            <input type="text" name="Name" placeholder="Введите имя" required>
+        </div>
+
+        <div class="form-group">
+            <label>Номер телефона:</label>
+            <input type="tel" name="Phone" placeholder="+7" required>
+        </div>
+
+        <div class="form-group">
+            <label>Email:</label>
+            <input type="email" name="Email" placeholder="email@example.com" required>
+        </div>
+
+        <div class="form-group">
+            <label>Специальность:</label>
+
+            <div class="speciality">
+
+                <input type="radio" name="Speciality" value="Программирование" id="dev">
+                <label for="dev">Программирование</label>
+
+                <br>
+
+                <input type="radio" name="Speciality" value="Дизайн" id="design">
+                <label for="design">Дизайн</label>
+
+                <br>
+
+                <input type="radio" name="Speciality" value="Маркетинг" id="marketing">
+                <label for="marketing">Маркетинг</label>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="courses">Курс:</label>
+            <select name="Course" id="courses">
+                <option value="1 курс">1 курс</option>
+                <option value="2 курс">2 курс</option>
+                <option value="3 курс">3 курс</option>
+                <option value="4 курс">4 курс</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="">Дата рождения:</label>
+            <input type="date" name="BirthDate" required>
+        </div>
+        <div class="form-group">
+            <label for="">Технологии:</label>
+            <div class="speciality">
+                <input type="checkbox" name="Technologies" value="HTML/CSS" id="html">
+                <label for="html">HTML/CSS</label>
+                <br>
+                <input type="checkbox" name="Technologies" value="JavaScript" id="js">
+                <label for="js">JavaScript</label>
+                <br>
+                <input type="checkbox" name="Technologies" value="C#" id="csharp">
+                <label for="csharp">C#</label>
+                <br>
+                <input type="checkbox" name="Technologies" value="Python" id="python">
+                <label for="python">Python</label>
+            </div>
+        </div>
+        <button class="form-button" type="submit">
+            Отправить
+        </button>
+        <button class="clear-button" type="reset">Очистить</button>
+
+    </form>
+
+    <div id="status" class="status"></div>
+
+    <div id="result" class="student-card">
+
+        <div class="student-card-header">
+            <h2>Анкета отправлена</h2>
+            <p>Данные студента</p>
+        </div>
+
+        <div class="student-info">
+            <div class="info-item">
+                <span>Имя</span>
+                <strong id="result-name"></strong>
+            </div>
+            <div class="info-item">
+                <span>Телефон</span>
+                <strong id="result-phone"></strong>
+            </div>
+            <div class="info-item">
+                <span>Email</span>
+                <strong id="result-email"></strong>
+            </div>
+            <div class="info-item">
+                <span>Специальность</span>
+                <strong id="result-speciality"></strong>
+            </div>
+            <div class="info-item">
+                <span>Курс</span>
+                <strong id="result-course"></strong>
+            </div>
+            <div class="info-item">
+                <span>Дата рождения</span>
+                <strong id="result-birthdate"></strong>
+            </div>
+            <div class="info-item">
+                <span>Технологии</span>
+                <strong id="result-technologies"></strong>
+            </div>
+        </div>
+
+    </div>
+
+    @if (Model.Message != null)
+    {
+        <div class="result">
+            <h3>Данные анкеты:</h3>
+
+            <p style="white-space: pre-line;">
+                @Model.Message
+            </p>
+        </div>
+    }
+
+</div>
+
+<script>
+    const form = document.querySelector("form");
+    const button = form.querySelector("button[type='submit']");
+    const status = document.querySelector("#status");
+
+    form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        button.textContent = "Отправка..."
+        button.disabled = true;
+
+        const formData = new FormData(form);
+        try {
+        const response = await fetch("", {
+            method: "POST",
+            body: formData
+        });
+
+        if(!response.ok){
+            throw new Error("Ошибка сервера")
+        }
+
+        const data = await response.json();
+        console.log(data);
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        document.querySelector("#result-name").textContent = data.Name;
+        document.querySelector("#result-phone").textContent = data.Phone;
+        document.querySelector("#result-email").textContent = data.Email;
+        document.querySelector("#result-speciality").textContent = data.Speciality;
+        document.querySelector("#result-course").textContent = data.Course;
+        document.querySelector("#result-birthdate").textContent = data.BirthDate;
+        document.querySelector("#result-technologies").textContent = data.Technologies;
+
+        document.querySelector("#result").style.display = "block";
+
+        } catch(err) {
+            status.textContent = "Не удалось отправить анкету";
+        } finally {
+            button.disabled = false;
+            button.textContent = "Анкета усапешно отправлена";
+        }
+    });
+
+
+    form.addEventListener("reset", function(){
+        document.querySelector("#result").style.display = "none";
+        document.querySelector("#status").textContent = '';
+
+    })
+</script>
+
+dotnet --version
+
+winget install Microsoft.DotNet.SDK.10
