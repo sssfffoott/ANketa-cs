@@ -1,6 +1,7 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using aspnetWebApp.models
 
 namespace aspnetWebApp.Pages;
 
@@ -20,7 +21,10 @@ public class IndexModel : PageModel
     public string BirthDate { get; set; }
     [BindProperty]
     public string[] Technologies { get; set; } = Array.Empty<string>();
-    public string Message { get; set; }
+    public static List<Student> Students {get; set;} = new();
+
+
+    // public string Message { get; set; }
     public void OnGet()
     {
         // Message = "Привет! Сообщение от C#";
@@ -40,20 +44,38 @@ public class IndexModel : PageModel
         //         $"Дата рождения: {BirthDate}\n" +
         //         $"Технологии: {technologies}";
 
-        var student = new
+        var student = new Student
         {
-            Name,
-            Phone,
-            Email,
-            Speciality,
-            Course,
-            BirthDate,
-            Technologies
+            Name = Name,
+            Phone = Phone,
+            Email = Email,
+            Speciality = Speciality,
+            Course = Course,
+            BirthDate = BirthDate,
+            Technologies = Technologies
         };
 
-        return Content(
-            JsonSerializer.Serialize(student), 
-            "application/json"
-        );
+        Student.add(student);
+
+        return new JsonResult(student);
+    }
+
+    public IActionResult onGetStudent(int Id){
+
+        var student = Students.FirstOrDefault(x => x.Id == Id);
+        if (student == null){
+
+
+        return new JsonResult(new
+        {
+            succes = false,
+            message = "Студент не найден"
+        });
+        }
+
+        Students.Remove(student);
+        return new JsonResult(new{
+            succes = true
+        });
     }
 }
