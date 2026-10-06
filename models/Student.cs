@@ -1,4 +1,6 @@
 namespace aspnetWebApp.Models;
+=======
+>>>>>>> fa86a7ecb14eb292dc7378b9a753125bca06be08
 
 public class Student
 {

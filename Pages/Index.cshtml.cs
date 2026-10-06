@@ -1,13 +1,18 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+
 using aspnetWebApp.Models;
+=======
+using aspnetWebApp.models
+>>>>>>> fa86a7ecb14eb292dc7378b9a753125bca06be08
 
 namespace aspnetWebApp.Pages;
 
 public class IndexModel : PageModel
 {
     [BindProperty]
+
     public required string Name { get; set; }
     [BindProperty]
     public required string Phone { get; set; }
@@ -19,12 +24,29 @@ public class IndexModel : PageModel
     public required string Course { get; set; }
     [BindProperty]
     public required string BirthDate { get; set; }
+=======
+    public string Name { get; set; }
+    [BindProperty]
+    public string Phone { get; set; }
+    [BindProperty]
+    public string Email { get; set; }
+    [BindProperty]
+    public string Speciality { get; set; }
+    [BindProperty]
+    public string Course { get; set; }
+    [BindProperty]
+    public string BirthDate { get; set; }
+>>>>>>> fa86a7ecb14eb292dc7378b9a753125bca06be08
     [BindProperty]
     public string[] Technologies { get; set; } = Array.Empty<string>();
     public static List<Student> Students {get; set;} = new();
 
 
+
     public string Message { get; set; }
+=======
+    // public string Message { get; set; }
+>>>>>>> fa86a7ecb14eb292dc7378b9a753125bca06be08
     public void OnGet()
     {
         // Message = "Привет! Сообщение от C#";
@@ -46,7 +68,10 @@ public class IndexModel : PageModel
 
         var student = new Student
         {
+<<<<<<< HEAD
             Id = Student.Any()? Student.Max(x=>x.Id)+1:1,
+=======
+>>>>>>> fa86a7ecb14eb292dc7378b9a753125bca06be08
             Name = Name,
             Phone = Phone,
             Email = Email,
@@ -55,7 +80,12 @@ public class IndexModel : PageModel
             BirthDate = BirthDate,
             Technologies = Technologies
         };
+<<<<<<< HEAD
         Students.Add(student);
+=======
+
+        Student.add(student);
+>>>>>>> fa86a7ecb14eb292dc7378b9a753125bca06be08
 
         return new JsonResult(student);
     }
