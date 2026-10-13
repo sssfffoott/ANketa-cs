@@ -1,11 +1,111 @@
+/* ОБЩИЕ СТИЛИ */
+html {
+    min-height: 100%;
+}
+
 body {
+    min-height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
     background-image: url(/images/onime.avif);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-position: fixed;
+    background-attachment: fixed;   
 }
 
+main {
+    flex: 1;
+    width: 100%;
+}
+
+/* HEADER */
+.site-header {
+    width: 100%;
+    background: white;
+    border-bottom: 1px solid #999;
+}
+
+.header-container {
+    max-width: 1100px;
+    min-height: 80px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.site-logo, .footer-logo {
+    color: black;
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    white-space: nowrap;
+}
+
+.site-logo span, .footer-logo span {
+    color: #3563e9;
+}
+
+.site-nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 26px;
+}
+
+.site-nav a {
+    text-decoration: none;
+    color: black;
+}
+
+.site-nav a:hover {
+    color: #3563e9;
+}
+
+/* FOOTER */
+.site-footer {
+    margin-top: 60px;
+    background: black;
+    color: white;
+}
+
+
+.footer-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 25px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.footer-logo {
+    color: white;
+    font-size: 22px;
+}
+
+.footer-container p {
+    margin: 0;
+    color: #b8b8b8;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.footer-copy {
+    color: #929292;
+    font-size: 12px;
+}
+
+/* ФОРМА */
 .form-container {
     max-width: 500px;
     margin: 50px auto;
@@ -15,6 +115,7 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
+    color: #fff;
 }
 
 .form-container h1 {
@@ -52,20 +153,6 @@ body {
     background: #fff;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
-
-/* .form-group input[type="text"],
-.form-group input[type="tel"],
-.form-group input[type="email"],
-.form-group input[type="date"],
-.form-group select {
-width: 100%;
-padding: 12px 15px;
-margin-top: 7px;
-border: 1px solid #ccc;
-border-radius: 10px;
-box-sizing: border-box;
-font-size: 16px;
-} */
 
 .form-group select {
     padding-right: 20px;
@@ -105,16 +192,6 @@ font-size: 16px;
     background: #0056b3;
 }
 
-.student-card {
-    display: none;
-    margin-top: 25px;
-    padding: 20px;
-    background: #f5f5f5;
-    border-radius: 12px;
-    text-align: left;
-    /* white-space: pre-line; */
-}
-
 .clear-button {
     width: 100%;
     padding: 13px;
@@ -124,4 +201,64 @@ font-size: 16px;
     color: #0056b3;
     font-size: 16px;
     cursor: pointer;
+}
+
+#result,
+.student-card {
+    margin-top: 25px;
+    padding: 20px;
+    background: #f5f5f5;
+    color: #000;
+    border-radius: 12px;
+    text-align: left;
+}
+
+
+#result {
+    display: none;
+}
+
+.student-card-header h2 {
+    margin: 0 0 5px;
+    font-size: 20px;
+}
+
+.student-card-header p {
+    margin: 0;
+    color: #555;
+}
+
+.student-info {
+    margin-top: 12px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 6px 0;
+    border-bottom: 1px dashed #ddd;
+}
+
+.info-item span {
+    color: #666;
+}
+
+.delete-button {
+    margin-top: 12px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    background: #e74c3c;
+    color: white;
+    cursor: pointer;
+}
+
+.student-section {
+    margin-top: 30px;
+}
+
+.student-section h2 {
+    color: #fff;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
 }
