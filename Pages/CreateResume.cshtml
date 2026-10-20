@@ -1,5 +1,5 @@
 @page
-@model IndexModel
+@model CreateResumeModel 
 @* @{
     Layout = null;
     } *@
@@ -184,7 +184,7 @@
             document.querySelector("#result-email").textContent = data.email;
             document.querySelector("#result-speciality").textContent = data.speciality;
             document.querySelector("#result-course").textContent = data.course;
-            document.querySelector("#result-birthdate").textContent = data.bithDate;
+            document.querySelector("#result-birthdate").textContent = data.birthDate;
             document.querySelector("#result-technologies").textContent = data.technologies;
 
             document.querySelector("#result").style.display = "block";
@@ -274,7 +274,7 @@
                     </button>
                     `;
 
-                    studentsList.appendChild(card);
+                    studentList.appendChild(card);
             });
         } catch (error) {
             console.error(error);

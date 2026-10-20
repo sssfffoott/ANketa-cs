@@ -16,5 +16,5 @@ public class Student
  
     public string BirthDate { get; set; } = "";
 
-    public string[] Technologies { get; set; } = Array.Empty<string>();
+    public string[] Technologies { get; set; } = Array.Empty<string>(); 
 }

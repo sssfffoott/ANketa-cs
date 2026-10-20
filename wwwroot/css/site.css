@@ -1,139 +1,339 @@
-/* ОБЩИЕ СТИЛИ */
+/* =========================================
+   ПЕРЕМЕННЫЕ И БАЗОВЫЕ НАСТРОЙКИ
+   ========================================= */
+:root {
+    --bg-glass: rgba(12, 12, 15, 0.75);
+    --border-glass: rgba(255, 255, 255, 0.08);
+    --accent: #e11d48; /* Роковой рубиновый */
+    --accent-hover: #be123c;
+    --text-main: #f4f4f5;
+    --text-muted: #a1a1aa;
+}
+
 html {
     min-height: 100%;
 }
 
 body {
-    min-height: 100%;
+    min-height: 100vh;
     margin: 0;
     display: flex;
     flex-direction: column;
-    font-family: Arial, Helvetica, sans-serif;
-    color: black;
-    background-image: url(/images/onime.avif);
+    font-family: 'Segoe UI', system-ui, Arial, sans-serif;
+    color: var(--text-main);
+    
+    background-image: linear-gradient(rgba(9, 9, 11, 0.85), rgba(9, 9, 11, 0.95)), url('/images/onime1.jpg');
     background-size: cover;
-    background-position: center;
+    background-position: center top;
     background-repeat: no-repeat;
-    background-attachment: fixed;   
+    background-attachment: fixed; 
+    background-color: #09090b;
 }
 
 main {
     flex: 1;
     width: 100%;
+    padding-top: 70px; /* Отступ под фиксированную шапку */
 }
 
-/* HEADER */
+/* =========================================
+   HEADER (Шапка всегда сверху)
+   ========================================= */
 .site-header {
     width: 100%;
-    background: white;
-    border-bottom: 1px solid #999;
+    height: 70px;
+    background: rgba(9, 9, 11, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-glass);
+    
+    position: fixed; /* Жестко фиксируем */
+    top: 0;
+    left: 0;
+    z-index: 1000;
 }
 
 .header-container {
-    max-width: 1100px;
-    min-height: 80px;
+    max-width: 1200px;
+    height: 100%;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 30px;
 }
 
 .site-logo, .footer-logo {
-    color: black;
+    color: var(--text-main);
     text-decoration: none;
-    font-size: 25px;
+    font-size: 24px;
     font-weight: 800;
-    letter-spacing: -1px;
-    white-space: nowrap;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 .site-logo span, .footer-logo span {
-    color: #3563e9;
+    color: var(--accent);
 }
 
 .site-nav {
     display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 26px;
+    gap: 32px;
 }
 
 .site-nav a {
     text-decoration: none;
-    color: black;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 15px;
+    transition: all 0.3s ease;
 }
 
 .site-nav a:hover {
-    color: #3563e9;
+    color: var(--text-main);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
-/* FOOTER */
+/* =========================================
+   FOOTER (Подвал)
+   ========================================= */
 .site-footer {
-    margin-top: 60px;
-    background: black;
-    color: white;
+    background: rgba(9, 9, 11, 0.9);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border-glass);
+    color: var(--text-muted);
+    padding: 20px 0;
+    margin-top: 40px;
 }
-
 
 .footer-container {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 25px 25px;
+    padding: 0 24px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     flex-wrap: wrap;
-    gap: 18px;
+    gap: 15px;
 }
 
-.footer-logo {
-    color: white;
-    font-size: 22px;
+.footer-logo { font-size: 18px; }
+.footer-container p { margin: 0; font-size: 13px; }
+
+/* =========================================
+   ГЛАВНАЯ СТРАНИЦА (Всё влезает на 1 экран!)
+   ========================================= */
+.home-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    /* Заставляем страницу занимать высоту экрана минус шапка */
+    min-height: calc(100vh - 70px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Центрируем контент по вертикали */
 }
 
-.footer-container p {
-    margin: 0;
-    color: #b8b8b8;
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-.footer-copy {
-    color: #929292;
-    font-size: 12px;
-}
-
-/* ФОРМА */
-.form-container {
-    max-width: 500px;
-    margin: 50px auto;
-    padding: 35px;
-    background: rgb(71, 132, 134);
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
-    color: #fff;
-}
-
-.form-container h1 {
-    margin-bottom: 10px;
-}
-
-.form-container p.description {
-    color: #000000;
-    margin-bottom: 30px;
-}
-
-.form-group {
-    text-align: left;
+.home-hero {
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-glass);
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+    max-width: 700px;
     margin-bottom: 20px;
 }
 
-.form-group label {
+.home-labels {
+    color: var(--accent);
+    font-weight: 800;
+    letter-spacing: 3px;
+    font-size: 13px;
+    text-transform: uppercase;
+    margin: 0 0 16px 0;
+}
+
+.home-hero h1 {
+    font-size: clamp(32px, 5vw, 48px);
+    margin: 0 0 16px;
+    line-height: 1.1;
+    font-weight: 800;
+}
+
+.home-hero p {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    line-height: 1.6;
+}
+
+.home-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.home-button {
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    color: white;
+    padding: 14px 28px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 16px;
     font-weight: 600;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 8px 20px rgba(225, 29, 72, 0.3);
+}
+
+.home-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(225, 29, 72, 0.5);
+}
+
+.home-button-seconary {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-main);
+    box-shadow: none;
+    border: 1px solid var(--border-glass);
+}
+
+.home-button-seconary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.home-features {
+    display: flex;
+    gap: 16px;
+    max-width: 700px;
+}
+
+.home-feature {
+    flex: 1;
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-glass);
+    padding: 20px;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.home-feature:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(225, 29, 72, 0.4);
+    transform: translateY(-4px);
+}
+
+.home-feature h2 { font-size: 16px; margin: 0 0 8px 0; color: var(--text-main); }
+.home-feature p { font-size: 13px; color: var(--text-muted); margin: 0; line-height: 1.4; }
+
+/* =========================================
+   КАТАЛОГ РЕЗЮМЕ (Resumes)
+   ========================================= */
+.resumes-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+
+.resumes-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.resumes-heading h1 { font-size: 36px; margin: 10px 0; }
+
+.resumes-count {
+    background: rgba(225, 29, 72, 0.15);
+    color: var(--accent);
+    border: 1px solid rgba(225, 29, 72, 0.3);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 24px;
+}
+
+/* =========================================
+   ФОРМА (CreateResume) - Удобный Дашборд
+   ========================================= */
+.form-container {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr; /* Форма чуть шире списка */
+    gap: 30px;
+    max-width: 1400px;
+    /* УБРАЛИ жесткую высоту и скролл внутри! Теперь форма дышит */
+    margin: 30px auto;
+    padding: 40px;
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-glass);
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    box-sizing: border-box;
+    align-items: start; /* Колонки выравниваются по верху */
+}
+
+/* Заголовки */
+.form-container > h1,
+.form-container > p.description {
+    grid-column: 1 / -1;
+    margin: 0;
+}
+
+.form-container > h1 { color: var(--text-main); margin-bottom: 5px; font-size: 28px; }
+.form-container > p.description { color: var(--text-muted); margin-bottom: 20px; font-size: 16px; }
+
+/* Левая колонка (Форма) */
+.form-container > form {
+    grid-column: 1;
+    display: flex;
+    flex-direction: column; /* Элементы идут друг под другом */
+}
+
+/* Правая колонка (Список студентов) */
+.form-container > .student-section {
+    grid-column: 2;
+    background: rgba(0, 0, 0, 0.2); /* Выделяем список фоном */
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid var(--border-glass);
+    /* Даем списку максимальную высоту, чтобы он не тянул страницу вниз бесконечно */
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+/* Красивый скроллбар только для списка студентов */
+.form-container > .student-section::-webkit-scrollbar { width: 6px; }
+.form-container > .student-section::-webkit-scrollbar-track { background: transparent; }
+.form-container > .student-section::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+.form-container > .student-section::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* =========================================
+   ПОЛЯ ВВОДА (Сделаем их крупнее и удобнее)
+   ========================================= */
+.form-group { 
+    margin-bottom: 20px; 
+}
+
+.form-group label { 
+    font-size: 15px; 
+    color: var(--text-main); /* Сделали чуть ярче */
+    font-weight: 500;
+    margin-bottom: 8px; 
+    display: block; 
 }
 
 .form-group input[type="text"],
@@ -142,123 +342,132 @@ main {
 .form-group input[type="date"],
 .form-group select {
     width: 100%;
-    height: 46px;
-    padding: 0 15px;
-    margin-top: 7px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-sizing: border-box;
-    font-size: 16px;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #fff;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.form-group select {
-    padding-right: 20px;
-}
-
-.form-group input:focus {
-    outline: none;
-    border-color: #007bff;
-}
-
-.speciality {
-    margin-top: 10px;
-}
-
-.speciality label {
-    font-weight: normal;
-    margin-left: 5px;
-}
-
-.speciality input {
-    margin-bottom: 20px;
-}
-
-.form-button {
-    width: 100%;
-    padding: 13px;
-    border: none;
-    border-radius: 10px;
-    background: #007bff;
+    height: 50px; /* Увеличили высоту для удобства */
+    padding: 0 16px;
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.4);
     color: white;
     font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 20px;
+    transition: all 0.2s;
+    box-sizing: border-box;
 }
 
-.form-button:hover {
-    background: #0056b3;
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.2);
+}
+
+/* =========================================
+   РАДИОКНОПКИ И ЧЕКБОКСЫ (Убираем хаос от тегов <br>)
+   ========================================= */
+.speciality {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Выстраиваем в 2 колонки */
+    gap: 12px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid var(--border-glass);
+}
+
+/* Прячем теги <br>, чтобы они не ломали сетку */
+.speciality br {
+    display: none; 
+}
+
+/* Каждый вариант выбора делаем красивой плашкой */
+.speciality label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: var(--text-muted);
+    font-weight: normal;
+    margin: 0;
+    cursor: pointer;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+}
+
+.speciality label:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-main);
+}
+
+/* Стилизация самих кружочков и галочек */
+.speciality input[type="radio"],
+.speciality input[type="checkbox"] {
+    accent-color: var(--accent);
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    cursor: pointer;
+}
+
+/* Кнопки внизу формы */
+.form-button {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 12px;
+    transition: 0.3s;
+    box-shadow: 0 8px 20px rgba(225, 29, 72, 0.3);
+}
+.form-button:hover { 
+    box-shadow: 0 12px 25px rgba(225, 29, 72, 0.5); 
+    transform: translateY(-2px); 
 }
 
 .clear-button {
     width: 100%;
-    padding: 13px;
-    border: 1px solid #0056b3;
-    border-radius: 10px;
-    background: #ffffff;
-    color: #0056b3;
+    padding: 14px;
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    background: transparent;
+    color: var(--text-muted);
     font-size: 16px;
     cursor: pointer;
+    transition: 0.3s;
+}
+.clear-button:hover { 
+    background: rgba(255, 255, 255, 0.05); 
+    color: white; 
 }
 
-#result,
-.student-card {
-    margin-top: 25px;
-    padding: 20px;
-    background: #f5f5f5;
-    color: #000;
-    border-radius: 12px;
-    text-align: left;
-}
+/* =========================================
+   АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ (Чтобы не ломалось)
+   ========================================= */
+@media (max-width: 992px) {
+    .form-container {
+        grid-template-columns: 1fr; /* В один столбец */
+        padding: 20px;
+    }
+    
+    .form-container > form,
+    .form-container > .student-section {
+        grid-column: 1;
+    }
+    
+    .form-container > .student-section {
+        margin-top: 20px;
+        max-height: none; /* На телефоне пусть листается вместе со страницей */
+    }
 
-
-#result {
-    display: none;
-}
-
-.student-card-header h2 {
-    margin: 0 0 5px;
-    font-size: 20px;
-}
-
-.student-card-header p {
-    margin: 0;
-    color: #555;
-}
-
-.student-info {
-    margin-top: 12px;
-}
-
-.info-item {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 6px 0;
-    border-bottom: 1px dashed #ddd;
-}
-
-.info-item span {
-    color: #666;
-}
-
-.delete-button {
-    margin-top: 12px;
-    padding: 8px 14px;
-    border: none;
-    border-radius: 8px;
-    background: #e74c3c;
-    color: white;
-    cursor: pointer;
-}
-
-.student-section {
-    margin-top: 30px;
-}
-
-.student-section h2 {
-    color: #fff;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    .speciality {
+        grid-template-columns: 1fr; /* На телефоне выбор в один столбец */
+    }
 }

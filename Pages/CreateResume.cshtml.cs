@@ -42,17 +42,17 @@ public class CreateResumeModel : PageModel
         //         $"Дата рождения: {BirthDate}\n" +
         //         $"Технологии: {technologies}";
 
-        var student = new Student
-        {
-          Id = Students.Any() ? Students.Max(x => x.Id) + 1 : 1, 
-          Name = Name,
-          Phone = Phone,
-          Email = Email,
-          Speciality = Speciality,
-          Course = Course,
-          BirthDate = BirthDate,
-          Technologies = Technologies  
-        };
+ var student = new Student
+{
+    Id = Students.Any() ? Students.Max(x => x.Id) + 1 : 1, 
+    Name = Name ?? "",    
+    Phone = Phone ?? "",  
+    Email = Email ?? "",  
+    Speciality = Speciality ?? "", 
+    Course = Course ?? "", 
+    BirthDate = BirthDate ?? "", 
+    Technologies = Technologies  
+};
 
         Students.Add(student);
 
