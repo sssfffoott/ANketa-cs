@@ -1,5 +1,5 @@
 @page
-@model CreateResumeModel 
+@model CreateResumeModel
 @* @{
     Layout = null;
     } *@
@@ -83,25 +83,23 @@
                 <label for="python">Python</label>
             </div>
         </div>
+        <p>text</p>
         <button class="form-button" type="submit">
             Отправить
         </button>
         <button class="clear-button" type="reset">Очистить</button>
-
     </form>
 
-    @* <h1>Расширить анкету. Добавить:</h1>
-        <h2>1. Выбор города через select</h2>
-        <h2>2. Выбор основного языка программирования</h2>
-        <h2>3. Формат обучения (очно, заочно, дистанционное)</h2>
-        <h2>4. Инфомация о себе через тег textarea</h2>
-        <h2>5. Дополнить список технологий</h2> *@
+    <div id="status" class="status"></div>
 
-    <div id="result" class="student-car">
+    @* КАРТОЧКА ПОСЛЕДНЕГО ДОБАВЛЕННОГО СТУДЕНТА *@
+    <div id="result" class="student-card">
+
         <div class="student-card-header">
             <h2>Анкета отправлена</h2>
             <p>Данные студента</p>
         </div>
+
         <div class="student-info">
             <div class="info-item">
                 <span>Имя</span>
@@ -132,6 +130,7 @@
                 <strong id="result-technologies"></strong>
             </div>
         </div>
+
     </div>
 
     @if (Model.Message != null)
@@ -145,76 +144,88 @@
         </div>
     }
 
-    <div class="student-section">
+    @* СПИСОК ВСЕХ СТУДЕНТОВ *@
+    <div class="students-section">
         <h2>Список студентов</h2>
         <div id="students-list"></div>
     </div>
-
 </div>
 
 <script>
+    @* НАХОДИМ ЭЛЕМЕНТЫ СТРАНИЦЫ - ФОРМА, КНОПКА, СТАТУС *@
     const form = document.querySelector("form");
     const button = form.querySelector("button[type='submit']");
     const status = document.querySelector("#status");
-    const studentList = document.querySelector("#students-list");
+    const studentsList = document.querySelector("#students-list");
+ 
+    @* ОТПРАВКА ФОРМЫ *@
+        form.addEventListener("submit", async function (event) {
+            event.preventDefault();
 
-    form.addEventListener("submit", async function (event) {
-        event.preventDefault();
+            button.textContent = "Отправка..."
+            button.disabled = true;
 
-        const button = form.querySelector("button");
-        button.textContent = "Отправка..."
-        button.disabled = true;
+            const formData = new FormData(form);
 
-        const formData = new FormData(form);
-        try {
-            const response = await fetch("", {
-                method: "POST",
-                body: formData
-            });
+            try {
+                const response = await fetch("", {
+                    method: "POST",
+                    body: formData
+                });
 
-            if (!response.ok) {
-                throw new Error("Ошибка сервера");
+                if (!response.ok) {
+                    throw new Error("Ошибка сервера");
+                }
+
+                const data = await response.json();
+                console.log(data);
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                @* ПОДСТАВЛЯЕМ ДАННЫЕ ПОСЛЕДНЕГО ДОБАВЛЕННОГО СТУДЕНТА *@
+                document.querySelector("#result-name").textContent = data.name;
+                document.querySelector("#result-phone").textContent = data.phone;
+                document.querySelector("#result-email").textContent = data.email;
+                document.querySelector("#result-speciality").textContent = data.speciality;
+                document.querySelector("#result-course").textContent = data.course;
+                document.querySelector("#result-birthdate").textContent = data.birthDate;
+                document.querySelector("#result-technologies").textContent = data.technologies;
+
+                @* ПОКАЗЫВАЕМ АНКЕТУ СТУДЕНТА ЧЕРЕЗ СТИЛЬ DISPLAY: BLOCK *@
+                    document.querySelector("#result").style.display = "block";
+                status.textContent = "Анкета успешно отправлена";
+            
+                @* ОБНОВЛЯЕМ СПИСОК СТУДЕНТОВ *@
+                    await loadStudents();
+
+                @* ОЧИЩАЕМ ФОРМУ *@
+                    form.reset();
+            } catch (error) {
+                console.error(error)
+                status.textContent = "Не удалось отправить анкету";
+            } finally {
+                button.disabled = false;
+                button.textContent = "Отправить";
             }
+        });
 
-            const data = await response.json();
-            await new Promise(resolve => setTimeout(resolve, 1500));
+    @* ПОЛУЧЕНИЕ СПИСКА СТУДЕНТОВ *@
+        async function loadStudents() {
+            try {
+                const response = await fetch("?handler=Students");
 
-            document.querySelector("#result-name").textContent = data.name;
-            document.querySelector("#result-phone").textContent = data.phone;
-            document.querySelector("#result-email").textContent = data.email;
-            document.querySelector("#result-speciality").textContent = data.speciality;
-            document.querySelector("#result-course").textContent = data.course;
-            document.querySelector("#result-birthdate").textContent = data.birthDate;
-            document.querySelector("#result-technologies").textContent = data.technologies;
+                if (!response.ok) {
+                    throw new Error("Ошибка загрузки студентов")
+                };
+            
+                const students = await response.json()
 
-            document.querySelector("#result").style.display = "block";
-            button.textContent = "Анкета успешно отправлена (❁´◡`❁)";
+                @* ОЧИЩАЕМ СТАРЫЙ СПИСОК *@
+                    studentsList.innerHTML = "";
 
-            await loadStudents();
-
-            form.reset();
-        } catch (err) {
-            console.log(err);
-            status.textContent = "Не удалось отправить анкету";
-        } finally {
-            button.disabled = false;
-            button.textContent = "Отправить";
-        }
-    })
-
-    async function loadStudents() {
-        try {
-            const response = await fetch("");
-            if (!response.ok) {
-                throw new Error("Ошибка загрузки студентов");
-            }
-            const students = await response.json();
-            studentList.innerHTML = '';
-
-            students.forEach(student => {
-                const card = document.createElement("div");
-                card.className = "student-card";
-                card.innerHTML = `
+                students.forEach(student => {
+                    const card = document.createElement("div");
+                    card.className = "student-card";
+                    card.innerHTML = `
                     <div class="student-card-header">
                         <div>
                             <h2>
@@ -274,48 +285,57 @@
                     </button>
                     `;
 
-                    studentList.appendChild(card);
-            });
-        } catch (error) {
-            console.error(error);
-            studentsList.innerHTML = `
+                    studentsList.appendChild(card);
+
+                });
+            } catch (error) {
+                console.error(error);
+                studentsList.innerHTML = `
                 <div class="result">
                 Не удалось загрузить список студентов
                 </div>
                 `;
+
+            }
         }
-    }
 
-    async function deleteStudent(id) {
-        try {
-            const token = document.querySelector(
-                'input[name="__RequestVerificationToken"]'
-            ).value;
+    @* УДАЛЕНИЕ АНКЕТЫ СТУДЕНТА *@
+        async function deleteStudent(id) {
+            try {
+                const token = document.querySelector(
+                    'input[name="__RequestVerificationToken"]'
+                ).value;
 
-            const response = await fetch("?handler=Delete&id=" + id, {
-                method: "POST",
-                headers: {
-                    "RequestVerificationToken": token
+                const response = await fetch("?handler=Delete&id=" + id, {
+                    method: "POST",
+                    headers: {
+                        "RequestVerificationToken": token
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error("Ошибка удаления");
                 }
-            });
 
-            if (!response.ok) {
-                throw new Error("Ошибка удаления");
+                const result = await response.json();
+
+                if (result.success) {
+                    status.textContent = "Анкета студента удалена";
+                    await loadStudents();
+                }
+
+            } catch (error) {
+                console.error(error);
+                status.textContent = "Не удалось удалить анкету студента";
             }
-
-            const result = await response.json();
-
-            if (result.success) {
-                status.textContent = "Анкета студента удалена (❁´◡`❁)";
-                await loadStudents();
-            }
-        } catch (err) {
-            console.error(err);
-            status.textContent = "Не удалось удалить анкету студента";
         }
-    }
-    form.addEventListener("reset", function () {
-        document.querySelector("#result").style.display = "none";
-        document.querySelector("#status").textContent = "";
-    })
+
+    @* ОЧИСТКА ФОРМЫ *@
+        form.addEventListener("reset", function () {
+            document.querySelector('#result').style.display = 'none';
+            document.querySelector('#status').textContent = '';
+        })
+    @* ЗАГРУЗКА СПИСКА ПРИ ОТКРЫТИИ *@
+        loadStudents();
+
 </script>
